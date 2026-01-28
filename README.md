@@ -49,23 +49,29 @@ Technique: The telemetry script runs as a background daemon, while write access 
 
 🛠️ Reproduction Steps
 1. The Simulation Script (flight_telemetry.sh)
+   
 #!/bin/bash
 while true; do
     echo "[$TIMESTAMP] FLIGHT_ID: AX-770 | ALT: $((10000 + RANDOM % 500))" >> /var/log/flight_data.log
     sleep 5
 done
 
-2. Locking the "Black Box"
+3. Locking the "Black Box"
  Apply Immutable Attribute (Append Only)
+
  sudo chattr +a /var/log/flight_data.log
 
  Verify the Lock
+ 
  lsattr /var/log/flight_data.log
+ 
  Output: -----a-------
 
 3. The "Hacker" Test
  Attempt to delete the logs
+
  sudo rm /var/log/flight_data.log
+
  Result: rm: cannot remove ... Operation not permitted
 
 
