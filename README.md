@@ -19,7 +19,7 @@ graph TD
     end
 
     subgraph "Secure Storage (Black Box)"
-        Stream -- Appends --> Log[/var/log/flight_data.log]
+        Stream -- Appends --> Log["/var/log/flight_data.log"]
         style Log fill:#f96,stroke:#333,stroke-width:2px
         
         Kernel[Linux Kernel] -- Enforces +a Flag --> Log
@@ -29,6 +29,10 @@ graph TD
     subgraph "Security Controls"
         User[Hacker / Root] -- "rm / delete" --> Deny[🚫 Access Denied]
         style Deny fill:#000,color:#0f0,stroke:#0f0
+        
+        AIDE[AIDE Intrusion Detection] -- Monitors --> Hash[File Integrity Database]
+    end
+```
 
 🛡️ Security Controls (NIST SP 800-53)
 
