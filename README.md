@@ -56,19 +56,18 @@ while true; do
 done
 
 2. Locking the "Black Box"
-# Apply Immutable Attribute (Append Only)
-sudo chattr +a /var/log/flight_data.log
+ Apply Immutable Attribute (Append Only)
+ sudo chattr +a /var/log/flight_data.log
 
-# Verify the Lock
-lsattr /var/log/flight_data.log
-# Output: -----a-------
+ Verify the Lock
+ lsattr /var/log/flight_data.log
+ Output: -----a-------
 
 3. The "Hacker" Test
-# Attempt to delete the logs
-sudo rm /var/log/flight_data.log
-# Result: rm: cannot remove ... Operation not permitted
+ Attempt to delete the logs
+ sudo rm /var/log/flight_data.log
+ Result: rm: cannot remove ... Operation not permitted
 
 
         
-        AIDE[AIDE Intrusion Detection] -- Monitors --> Hash[File Integrity Database]
-    end
+  
