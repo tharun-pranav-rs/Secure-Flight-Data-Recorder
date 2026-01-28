@@ -47,32 +47,32 @@ Benefit: Creates a cryptographic hash database of the file system. Any unauthori
 3. Least Privilege
 Technique: The telemetry script runs as a background daemon, while write access to the log directory is strictly controlled via file system attributes.
 
-🛠️ Reproduction Steps
-1. The Simulation Script (flight_telemetry.sh)
-   
+## 🛠️ Reproduction Steps
+
+### 1. The Simulation Script (`flight_telemetry.sh`)
+```bash
 #!/bin/bash
 while true; do
+    TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
     echo "[$TIMESTAMP] FLIGHT_ID: AX-770 | ALT: $((10000 + RANDOM % 500))" >> /var/log/flight_data.log
     sleep 5
 done
+2. Locking the "Black Box"
+Apply the Immutable Attribute (Append Only) to the log file.
 
-3. Locking the "Black Box"
- Apply Immutable Attribute (Append Only)
+Bash
+sudo chattr +a /var/log/flight_data.log
+Verify the Lock:
 
- sudo chattr +a /var/log/flight_data.log
-
- Verify the Lock
- 
- lsattr /var/log/flight_data.log
- 
- Output: -----a-------
-
+Bash
+lsattr /var/log/flight_data.log
+# Output: -----a-------
 3. The "Hacker" Test
- Attempt to delete the logs
+Attempt to delete the logs to simulate an attack.
 
- sudo rm /var/log/flight_data.log
-
- Result: rm: cannot remove ... Operation not permitted
+Bash
+sudo rm /var/log/flight_data.log
+# Result: rm: cannot remove ... Operation not permitted
 
 
         
